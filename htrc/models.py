@@ -12,11 +12,16 @@ class Page(ABC):
         """
         pass
 
+    @property
     def text(self) -> str:
         return os.linesep.join(self.textlines)
 
 
-class PageStructure:
+class PageStructure(Page):
+    def __init__(self) -> None:
+        self.num_header_lines = 0
+        self.num_footer_lines = 0
+
     @property
     def has_header(self) -> bool:
         return self.num_header_lines > 0

@@ -147,8 +147,8 @@ def parse_page_structure(pages: List[T],
     for page in pages:
         last_header_line = last_header_line_pages_map.get(page)
         first_footer_line = first_footer_line_pages_map.get(page)
+        page.__class__ = type('StructuredPage', (page.__class__, PageStructure), {})
         page.num_header_lines = last_header_line + 1 if last_header_line is not None else 0
         page.num_footer_lines = len(page.textlines) - first_footer_line if first_footer_line is not None else 0
-        page.__class__ = type('StructuredPage', (page.__class__, PageStructure), {})
 
     return pages
