@@ -17,7 +17,7 @@ class Page(ABC):
         return os.linesep.join(self.text_lines)
 
 
-class PageStructure(Page):
+class PageStructure(Page, ABC):
     def __init__(self) -> None:
         self.num_header_lines = 0
         self.num_footer_lines = 0
