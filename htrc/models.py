@@ -6,7 +6,7 @@ from typing import List
 class Page(ABC):
     @property
     @abstractmethod
-    def textlines(self) -> List[str]:
+    def text_lines(self) -> List[str]:
         """
         The lines of text on the page
         """
@@ -14,7 +14,7 @@ class Page(ABC):
 
     @property
     def text(self) -> str:
-        return os.linesep.join(self.textlines)
+        return os.linesep.join(self.text_lines)
 
 
 class PageStructure(Page):
@@ -28,7 +28,7 @@ class PageStructure(Page):
 
     @property
     def has_body(self) -> bool:
-        return len(self.textlines) - self.num_header_lines - self.num_footer_lines > 0
+        return len(self.text_lines) - self.num_header_lines - self.num_footer_lines > 0
 
     @property
     def has_footer(self) -> bool:
@@ -36,15 +36,15 @@ class PageStructure(Page):
 
     @property
     def header_lines(self) -> List[str]:
-        return self.textlines[:self.num_header_lines]
+        return self.text_lines[:self.num_header_lines]
 
     @property
     def body_lines(self) -> List[str]:
-        return self.textlines[self.num_header_lines:len(self.textlines) - self.num_footer_lines]
+        return self.text_lines[self.num_header_lines:len(self.text_lines) - self.num_footer_lines]
 
     @property
     def footer_lines(self) -> List[str]:
-        return self.textlines[-self.num_footer_lines:] if self.has_footer else []
+        return self.text_lines[-self.num_footer_lines:] if self.has_footer else []
 
     @property
     def header(self) -> str:
@@ -64,5 +64,5 @@ class HtrcPage(Page):
         self._lines = lines
 
     @property
-    def textlines(self) -> List[str]:
+    def text_lines(self) -> List[str]:
         return self._lines
