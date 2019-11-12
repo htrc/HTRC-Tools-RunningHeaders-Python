@@ -6,6 +6,7 @@ from htrc.models import Page, PageStructure
 from htrc.utils import clean_text, levenshtein, pairwise_combine_within_distance, flatten, group_consecutive_when
 
 T = TypeVar('T', bound=Page)
+U = TypeVar('U', bound=PageStructure)
 
 
 class _Line:
@@ -48,7 +49,7 @@ def parse_page_structure(pages: List[T],
                          min_similarity_ratio: float = 0.7,
                          min_cluster_size: int = 3,
                          max_header_lines: int = 3,
-                         max_footer_lines: int = 3) -> List[T]:
+                         max_footer_lines: int = 3) -> List[U]:
     def _get_page_lines(p: T) -> List[_Line]:
         return [_Line(text, line_num, p) for line_num, text in enumerate(p.text_lines)]
 
