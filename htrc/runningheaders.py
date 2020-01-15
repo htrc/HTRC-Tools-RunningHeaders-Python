@@ -99,7 +99,7 @@ def parse_page_structure(pages: List[T],
 
     def _extract_line_numbers(line: _Line) -> Tuple[_Line, List[int]]:
         numbers = [int(match.group(0)) for match in
-                   re.finditer(r"(?:(?<=^)|(?<=\s))\d+(?=\s|$)", line.text, flags=re.UNICODE)]
+                   re.finditer(r"(?:(?<=^)|(?<=\s))\d{1,4}(?=\s|$)", line.text, flags=re.UNICODE)]
 
         return line, numbers
 
