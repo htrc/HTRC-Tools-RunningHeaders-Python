@@ -105,7 +105,8 @@ class TestUtils(unittest.TestCase):
 def load_vol(path: str, num_pages: int) -> List[HtrcPage]:
     pages = []
     for n in range(num_pages):
-        with open('{}/{}.txt'.format(path, n), encoding='utf-8') as f:
+        page_num = str(n+1).zfill(8)
+        with open('{}/{}.txt'.format(path, page_num), encoding='utf-8') as f:
             lines = [line.rstrip() for line in f.readlines()]
             pages.append(HtrcPage(lines))
 
