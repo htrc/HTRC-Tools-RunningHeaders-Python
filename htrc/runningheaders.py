@@ -103,6 +103,14 @@ def parse_page_structure(pages: List[T],
 
         return line, numbers
 
+    def _extract_potential_page_numbers(lines: List[_Line]) -> Tuple[_Line, List[int]]:
+        assert len(lines) > 0
+        line, numbers = _extract_line_numbers(lines[-1])
+        if not numbers and not str.strip(line.text) and len(lines) > 1:
+            line, numbers = _extract_line_numbers(lines[-2])
+
+        return line, numbers
+
     candidate_header_lines = []
     candidate_footer_lines = []
 
@@ -132,7 +140,7 @@ def parse_page_structure(pages: List[T],
                        len(cluster) >= min_cluster_size]
 
     if not footer_clusters:
-        potential_page_numbers = [_extract_line_numbers(lines[-1]) for lines in pages_lines if lines]
+        potential_page_numbers = [_extract_potential_page_numbers(lines) for lines in pages_lines if lines]
         potential_page_numbers = [(line, numbers[0]) for line, numbers in potential_page_numbers if len(numbers) == 1]
         potential_clusters = map(lambda group: tuple(map(lambda t: t[0], group)),
                                  group_consecutive_when(potential_page_numbers, lambda x, y: y[1] - x[1] == 1))
